@@ -12,7 +12,7 @@ shell调试方法：
   DEBUG                    脚本中每一条命令执行之前
 
 
-eg: 
+eg1: 
   1 #/usr/env sh
   2
   3
@@ -36,5 +36,36 @@ eg:
 ./trap.sh: line 16: haha: command not found
 [6] : Command exit with status with 127
 [6] : Command exit with status with 1
+
+
+eg2:
+  1 #/usr/env sh
+  2
+  3 trap 'echo "before execute $LINENO, a=$a, b=$b, c=$c"' DEBUG
+  4
+  5 a=1
+  6
+  7 if [ $a -eq 1 ]
+  8 then
+  9         b=2
+ 10 else
+ 11         b=3
+ 12 fi
+ 13
+ 14 c=4
+ 15
+ 16 echo "end"
+
+执行结果：
+before execute 5, a=, b=, c=
+before execute 7, a=1, b=, c=
+before execute 9, a=1, b=, c=
+before execute 14, a=1, b=2, c=
+before execute 16, a=1, b=2, c=4
+end
+
+可见，DEBUG信号对追踪变量的变化非常有用。
+
+
 
 
