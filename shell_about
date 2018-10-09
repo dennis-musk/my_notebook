@@ -131,6 +131,23 @@ third
 zero
 lfgp00
 
+3. 用开关控制
+eg:
+  1 #!/usr/bin/env sh
+  2
+  3 DEBUG=true
+  4
+  5 MY_DEBUG()
+  6 {
+  7         [ "$DEBUG" = "true" ] && $@ || :
+  8 }
+  9
+ 10 a=1
+ 11
+ 12 MY_DEBUG echo "a=$a"
+执行结果：
+a=1
+如果把第三行DEBUG=true 注掉，则不输出
 
 
 
