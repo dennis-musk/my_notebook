@@ -66,6 +66,73 @@ end
 
 可见，DEBUG信号对追踪变量的变化非常有用。
 
+2. 利用-x 选项
+eg：
+  1 #!/usr/bin/env sh
+  2
+  3 avar[0]="zero"
+  4 avar[1]="first"
+  5 avar[2]="second"
+  6 avar[3]="third"
+  7
+  8 echo ${avar[0]}
+  9 echo ${avar[1]}
+ 10 echo ${avar[2]}
+ 11 echo ${avar[3]}
+ 12
+ 13 echo ${avar}
+
+执行结果：
++ avar[0]=zero
++ avar[1]=first
++ avar[2]=second
++ avar[3]=third
++ echo zero
+zero
++ echo first
+first
++ echo second
+second
++ echo third
+third
++ echo zero
+zero
+
+也可在脚本中用set -x 和 set +x 来控制
+
+  1 #!/usr/bin/env sh
+  2
+  3 avar[0]="zero"
+  4 avar[1]="first"
+  5 avar[2]="second"
+  6 avar[3]="third"
+  7
+  8 echo ${avar[0]}
+  9
+ 10 set -x
+ 11
+ 12 echo ${avar[1]}
+ 13 echo ${avar[2]}
+ 14 echo ${avar[3]}
+ 15
+ 16 set +x
+ 17
+ 18 echo ${avar}
+
+执行结果：
+zero
++ echo first
+first
++ echo second
+second
++ echo third
+third
++ set +x
+zero
+lfgp00
+
+
+
 
 
 
