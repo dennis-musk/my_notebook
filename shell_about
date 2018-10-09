@@ -1,0 +1,40 @@
+shell调试方法：
+
+ 1、使用trap命令       
+   trap命令用于捕获指定的信号并执行预定义的命令，其基本的语法是: trap 'command' signal 
+   其中signal是要捕获的信号，command是捕获到指定的信号之后，所要执行的命令。可以用kill –l命令看到系统中全部可用的信号名，
+ 捕获信号后所执行的命令可以是任何一条或多条合法的shell语句，也可以是一个函数名。
+   shell脚本在执行时，会产生三个“伪信号”，之所以称之为“伪信号”是因为这三个信号是由shell产生的，而其它的信号是由操
+ 作系统产生的。
+  shell伪信号信号名         何时产生
+  EXIT                     从一个函数中退出或整个脚本执行完毕
+  ERR                      当一条命令返回非零状态时(代表命令执行不成功)
+  DEBUG                    脚本中每一条命令执行之前
+
+
+eg: 
+  1 #/usr/env sh
+  2
+  3
+  4 ERR_TRAP()
+  5 {
+  6         echo "[$LINENO] : Command exit with status with $?"
+  7 }
+  8
+  9 foo()
+ 10 {
+ 11         return 1
+ 12 }
+ 13
+ 14 trap 'ERR_TRAP' ERR
+ 15
+ 16 haha
+ 17
+ 18 foo
+
+执行结果：
+./trap.sh: line 16: haha: command not found
+[6] : Command exit with status with 127
+[6] : Command exit with status with 1
+
+
